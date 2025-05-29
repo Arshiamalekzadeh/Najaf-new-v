@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import ServerError from "./pages/ServerError";
+import useLoadingStore from "./store/useLoadingStore";
+import theme from "./theme";
+// import Layout from "./ui/Layout";
+import LoadingOveray from "./ui/loadingOveray";
+import PrivateRoute from "./utils/privateRoutes";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { loading: overlayLoading } = useLoadingStore();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ThemeProvider theme={theme}>
+        <Routes>
+            <Route element={<PrivateRoute requiredRoles={["SuperAdmin"]} />}>
+              <Route path="/app/dashboard" element={<Dashboard />} />
+            </Route>
+          {/* <Route path="/app" element={<Layout />}>
+          </Route> */}
+          <Route path="/500" element={<ServerError />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+        <ToastContainer rtl />
+      </ThemeProvider>
+      {overlayLoading && <LoadingOveray />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

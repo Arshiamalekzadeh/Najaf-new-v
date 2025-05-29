@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url(_fontFaces.scss);
+@import url(_variables.scss);
+@import url(muiCustom.scss);
+
+/* Overwrite MUI */
+.customMuiListItemText {
+  flex: none !important;
+}
+
+body * {
+  font-family: Vazir !important;
+  font-weight: 300;
+}
+
+/* styles.css */
+.MuiDataGrid-cell {
+  text-align: right !important;
+  /* Force right alignment */
+  direction: rtl;
+  /* Set direction globally */
+}
+
+.Toastify__toast-container {
+  direction: rtl;
+}

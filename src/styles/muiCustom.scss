@@ -1,0 +1,32 @@
+.MuiDataGrid-columnHeader {
+  @apply bg-slate-50 text-slate-500;
+}
+
+/* You can target specific elements under MuiDataGrid if needed */
+.MuiDataGrid-columnHeaderTitle {
+  @apply font-semibold; /* Example for applying font */
+}
+
+//------AppBar-------------
+.MuiAppBar-root {
+  @apply shadow-none;
+}
+
+//-------SideBar-----------
+.subMenu > span {
+  @apply text-sm font-normal text-slate-600;
+}
+
+// .menuItem&::before
+.MuiBadge-badge {
+  left: -8px !important;
+  top: -3px !important;
+}
+
+// .MuiInputLabel-formControl {
+//   transform: translate(-14px, 11px) scale(1) !important;
+
+//   &.Mui-focused {
+//     transform: translate(-14px, -9px) scale(0.85) !important;
+//   }
+// }
