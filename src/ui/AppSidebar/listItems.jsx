@@ -1,105 +1,18 @@
-import { Divider, useMediaQuery, useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Dropbox } from "iconsax-react";
-import { ShoppingCart } from "iconsax-react";
-import { Signpost } from "iconsax-react";
-import { Buildings2 } from "iconsax-react";
-import {
-  ArrowLeft2,
-  Calendar,
-  Calendar2,
-  Cd,
-  Convert3DCube,
-  HomeHashtag,
-  House2,
-  Monitor,
-  Reserve,
-} from "iconsax-react";
+import { ArrowLeft2, Buildings2, Cd, Dropbox, Monitor, ShoppingCart, Signpost } from "iconsax-react";
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import routesData from "./routes.jsx";
 
 const ListItems = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
 
-  const routesData = [
-    {
-      icon: <Monitor variant="Bulk" />,
-      text: "داشبورد",
-      title: "dashboard",
-      path: "/app/dashboard",
-    },
-    // {
-    //   icon: <House2 variant="Bulk" />,
-    //   text: "اقامتگـاه‌هـا",
-    //   title: "accommodation",
-    //   submenu: [
-    //     { text: "مدیریت اقامتگاه‌هـا", path: "/app/accommodation" },
-    //     { text: "نوع اقامتگاه‌هـا", path: "/app/accommodationtype" },
-    //     { text: "امکانات", path: "/app/accommodationEquipmentType" },
-    //   ],
-    // },
-    // {
-    //   icon: <Calendar2 variant="Bulk" />,
-    //   text: "اقامت‌هـا",
-    //   title: "equipments",
-    //   path: "#",
-    //   submenu: [{ text: "مدیریت اقامت‌هـا", path: "/app/stays" }],
-    // },
-    // {
-    //   icon: <Calendar variant="Bulk" />,
-    //   text: "مدیریت رزروهـا",
-    //   title: "equipments",
-    //   path: "/app/reservationManagement",
-    // },
-    // {
-    //   icon: <Reserve variant="Bulk" />,
-    //   text: "رزرو",
-    //   title: "provinceCard",
-    //   path: "/app/provinceCard",
-    // },
-    // {
-    //   icon: <Convert3DCube variant="Bulk" />,
-    //   text: "درخواست‌هـای مـن",
-    //   title: "equipments",
-    //   path: "/app/myRequests",
-    // },
-    // {
-    //   icon: <HomeHashtag variant="Bulk" />,
-    //   text: "رزروهای اقامتگاه من",
-    //   title: "myAaccommodationReservations",
-    //   path: "/app/myAaccommodationReservations",
-    // },
-    {
-      icon: <Buildings2 variant="Bulk" />,
-      text: "مدیریت آدرس",
-      title: "AddressManagement",
-      path: "/app/addressManagement",
-     
-    },
-    {
-      icon: <Signpost variant="Bulk" />,
-      text: "مدیریت قرارداد",
-      title: "ContractManagement",
-      path: "/app/contractManagement",
-    },
-    {
-      icon: <Dropbox variant="Bulk" />,
-      text: "مدیریت محصول",
-      title: "ProductManagement",
-      path: "/app/productManagement",
-    },
-    {
-      icon: <ShoppingCart variant="Bulk" />,
-      text: "مدیریت ارسال",
-      title: "OrderManagement",
-      path: "/app/orderManagement",
-    },
-  ];
 
   const locationPath = useLocation().pathname;
   const [activePath, setActivePath] = useState(locationPath);

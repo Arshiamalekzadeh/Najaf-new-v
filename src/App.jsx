@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import ServerError from "./pages/ServerError";
 import useLoadingStore from "./store/useLoadingStore";
 import theme from "./theme";
-// import Layout from "./ui/Layout";
+import Layout from "./ui/Layout";
 import LoadingOveray from "./ui/loadingOveray";
 import PrivateRoute from "./utils/privateRoutes";
 
@@ -20,11 +20,11 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <Routes>
+          <Route path="/app" element={<Layout />}>
             <Route element={<PrivateRoute requiredRoles={["SuperAdmin"]} />}>
               <Route path="/app/dashboard" element={<Dashboard />} />
             </Route>
-          {/* <Route path="/app" element={<Layout />}>
-          </Route> */}
+          </Route>
           <Route path="/500" element={<ServerError />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Login />} />

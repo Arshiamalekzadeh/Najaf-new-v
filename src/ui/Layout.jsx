@@ -8,6 +8,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
 import theme from "../theme";
 import TopBar from "./AppBar";
+import MobileBottomNavBar from "./AppSidebar/MobileBottomNavBar";
 import Navigation from "./AppSidebar/Navigation";
 
 const drawerWidth = 240;
@@ -60,14 +61,12 @@ export default function Layout() {
 
         {isMobile && (
           <>
-            {!open && (
-              <TopBar
-                username={userName}
-                toggleDrawer={toggleDrawer}
-                open={open}
-                drawerWidth={drawerWidth}
-              />
-            )}
+            <TopBar
+              username={userName}
+              toggleDrawer={toggleDrawer}
+              open={open}
+              drawerWidth={drawerWidth}
+            />
 
             {open && (
               <Navigation
@@ -76,8 +75,11 @@ export default function Layout() {
                 drawerWidth={drawerWidth}
               />
             )}
+
+            {!open && <MobileBottomNavBar />} 
           </>
         )}
+
 
         <Box
           component="main"

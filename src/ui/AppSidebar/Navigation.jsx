@@ -6,12 +6,11 @@ import {
   styled,
   Toolbar,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import React from "react";
-import Logo from "../../assets/warehouseNav.png";
 import ListItems from "./listItems";
-import { useMediaQuery } from "@mui/material";
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open, drawerWidth }) => ({
@@ -43,8 +42,8 @@ const Navigation = ({ toggleDrawer, open, drawerWidth }) => {
   return (
     <Drawer variant="permanent" open={open} drawerWidth={drawerWidth} sx={{
       "& .MuiDrawer-paper": {
-        position: isMobile ? "fixed" : "relative", 
-        
+        position: isMobile ? "fixed" : "relative",
+
       },
     }}>
       <Toolbar
@@ -64,12 +63,7 @@ const Navigation = ({ toggleDrawer, open, drawerWidth }) => {
           className="text-left "
           sx={{ flexGrow: 1 }}
         >
-          <img
-            src={Logo}
-            width={90}
-            className="m-auto relative right-4 my-5"
-            alt="logo"
-          />
+
         </Typography>
         <IconButton onClick={toggleDrawer}>
           <ChevronLeftIcon />

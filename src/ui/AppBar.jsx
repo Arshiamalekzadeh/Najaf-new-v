@@ -35,7 +35,7 @@ const TopBar = ({ toggleDrawer, drawerWidth, open, username }) => {
       <Toolbar
         variant="dense"
         sx={{
-          pl: "24px", 
+          pl: "24px",
         }}
       >
         <IconButton
@@ -46,29 +46,31 @@ const TopBar = ({ toggleDrawer, drawerWidth, open, username }) => {
           onClick={toggleDrawer}
           sx={{
             ...(open && { display: "none" }),
+            display: { xs: "none", sm: "inline-flex" },
           }}
         >
           <MenuIcon />
         </IconButton>
+
         <Typography
           component="h1"
           variant="body1"
           color="inherit"
           noWrap
           className="!text-white"
-          sx={{ 
+          sx={{
             flexGrow: 1,
-            display: { xs: 'none', sm: 'block' } 
-          }}          
+            display: { xs: 'none', sm: 'block' }
+          }}
         >
-          سـامانه انبارداری
+          سامانه مفقودین
         </Typography>
-        <div  className="ml-7">
+        <div className="ml-7">
         </div>
-       <div className="flex items-center ">
-       <TopBarUserMenu />
-       <Typography>{username}</Typography>
-       </div>
+        <div className="flex items-center ">
+          <TopBarUserMenu />
+          <Typography>{username}</Typography>
+        </div>
       </Toolbar>
     </AppBar>
   );
