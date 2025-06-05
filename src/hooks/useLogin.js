@@ -11,16 +11,16 @@ const useLogin = () => {
     mutationFn: signIn,
     onSuccess: (data) => {
       if (data.result && data.result.token) {
-        const { token, refreshToken, expiredAt } = data.result;
+        const { token, refreshToken, userRoles } = data.result;
 
         const decoded = jwtDecode(token);
         const role = decoded.role || "User"; 
 
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("refreshToken", refreshToken);
-        sessionStorage.setItem("RoleUser", JSON.stringify(role));
+        sessionStorage.setItem("userRoles", userRoles);
 
-        setAuth(token, refreshToken, role);
+        setAuth(token, refreshToken, userRoles);
 
         toast.success("ورود موفق", {
           position: "top-center",

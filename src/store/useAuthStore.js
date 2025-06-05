@@ -1,21 +1,24 @@
 import { create } from "zustand";
 
 const useAuthStore = create((set) => ({
-  AccountTokenID: sessionStorage.getItem("AccountTokenID") || null,
-  LoginTokenID: sessionStorage.getItem("LoginTokenID") || null,
-  RoleUser: JSON.parse(sessionStorage.getItem("RoleUser")) || [],
+  token: sessionStorage.getItem("token") || null,
+  refreshToken: sessionStorage.getItem("refreshToken") || null,
+  role: sessionStorage.getItem("userRoles") || null, // Initialize as string, not array
+  // userName: sessionStorage.getItem("userName") || "", // Add userName for Layout
 
-  update: (AccountTokenID, LoginTokenID, RoleUser) => {
-    set({ AccountTokenID, LoginTokenID, RoleUser });
-    sessionStorage.setItem("AccountTokenID", AccountTokenID);
-    sessionStorage.setItem("LoginTokenID", LoginTokenID);
-    sessionStorage.setItem("RoleUser", JSON.stringify(RoleUser));
+  update: (token, refreshToken, userRoles, userName) => {
+    set({ token, refreshToken, userRoles, userName });
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("refreshToken", refreshToken);
+    sessionStorage.setItem("userRoles", userRoles); // Store as string, not JSON.stringify
+    // sessionStorage.setItem("userName", userName || "");
   },
   clear: () => {
-    set({ AccountTokenID: null, LoginTokenID: null, RoleUser: [] });
-    sessionStorage.removeItem("AccountTokenID");
-    sessionStorage.removeItem("LoginTokenID");
-    sessionStorage.removeItem("RoleUser");
+    set({ token: null, refreshToken: null, role: null, userName: "" });
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("userRoles");
+    // sessionStorage.removeItem("userName");
   },
 }));
 

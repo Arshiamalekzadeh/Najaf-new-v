@@ -3,7 +3,7 @@
 import useAuthStore from "../store/useAuthStore";
 
 const roleSets = {
-  isAdmin: ["administrator", "manager", "operator", "viewer"],
+  isAdmin: ["SuperAdmin"],
   isManager: ["manager", "operator", "viewer"],
   isOperator: ["operator", "viewer"],
   isViewer: ["viewer"],
