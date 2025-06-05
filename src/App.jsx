@@ -12,6 +12,7 @@ import theme from "./theme";
 import Layout from "./ui/Layout";
 import LoadingOveray from "./ui/loadingOveray";
 import PrivateRoute from "./utils/privateRoutes";
+import Access from "./components/accessbilty/access";
 
 function App() {
   const { loading: overlayLoading } = useLoadingStore();
@@ -23,6 +24,8 @@ function App() {
           <Route path="/app" element={<Layout />}>
             <Route element={<PrivateRoute requiredRoles={["SuperAdmin"]} />}>
               <Route path="/app/dashboard" element={<Dashboard />} />
+              <Route path="/app/accessbilty" element={<Access/>} />
+
             </Route>
           </Route>
           <Route path="/500" element={<ServerError />} />

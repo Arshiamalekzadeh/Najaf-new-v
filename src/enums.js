@@ -1,30 +1,6 @@
 export const QueryKeys = {
-  accommodation: ["accommodation"],
+  getAllRoles: ["getAllRoles"],
 
-  accommodationTypes: ["accommodationTypes"],
-  accommodationEquipmentType: ["accommodationEquipmentType"],
-  accommodationEquipmentTypeToggle: ["accommodationEquipmentTypeToggle"],
-  unitEquipmentType: ["unitEquipmentType"],
-  companions: ["companions"],
-  unit: ["unit"],
-  user: ["user"],
-  userQuota: ["userQuota"],
-  userCheck: ["userCheck"],
-  book: ["book"],
-  payment: ["payment"],
-  paymentCompanion: ["paymentCompanion"],
-  bookDay: ["bookDay"],
-  unitType: ["unitType"],
-  unitEquipmentTypeToggle: ["unitEquipmentTypeToggle"],
-  announcement: ["announcement"],
-  //stay -------------------
-  stay: ["stay"],
-  day: ["day"],
-  // -----------------------
-  province: ["province"],
-  city: ["city"],
-  poll: ["poll"],
-  captcha: ["captcha"],
 };
 
 export const MediaType = {

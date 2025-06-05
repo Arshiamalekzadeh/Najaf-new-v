@@ -25,11 +25,18 @@ const PageHeader = ({ title, icon, children, withoutBack }) => {
               color="inherit"
               className=" !mr-5 !text-slate-500"
               sx={{
-                display: { xs: "none", sm: "inline-flex" }, 
+                minWidth: { xs: "auto", sm: "auto" }, // Ensure button is compact on all screens
+                padding: { xs: "6px", sm: "6px 16px" }, // Smaller padding on mobile
               }}
             >
               <Back className="ml-1" size={20} />
-              بازگشت
+              <Typography
+                sx={{
+                  display: { xs: "none", sm: "inline" }, // Hide text on mobile, show on larger screens
+                }}
+              >
+                بازگشت
+              </Typography>
             </Button>
           </div>
         )}

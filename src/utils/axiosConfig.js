@@ -8,24 +8,23 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  if (config.url.includes("LoginUser")) {
-    const username = "a11617xc-1573-406f-b458-7ed3dgf52130";
-    const password = "HUlXohfOrClJNO7mvkDq5+oZ98pOPBtC";
-    config.headers.Authorization = `Basic ${btoa(`${username}:${password}`)}`;
+  const token = sessionStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = ` ${token}`;
   }
+
   config.metadata = { method: config.method };
   return config;
 });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-
   (error) => {
     if (error.response) {
       const { status, data } = error.response;
       const errorMessages = [];
 
-      // استخراج پیام خطا از ساختارهای مختلف
       const extractMessages = (obj) => {
         if (!obj) return;
 
@@ -40,22 +39,15 @@ axiosInstance.interceptors.response.use(
 
       if (status === 400) {
         extractMessages(data.errors || data);
-        errorMessages.forEach((message) => {
-          toast.error(message, {
-            position: "top-right",
-            theme: "colored",
-          });
-        });
+        errorMessages.forEach((message) =>
+          toast.error(message, { position: "top-right", theme: "colored" })
+        );
       } else if (status === 500) {
-        // اگر پیام مشخصی وجود داشت، نشون بده
         extractMessages(data.message);
         if (errorMessages.length > 0) {
-          errorMessages.forEach((message) => {
-            toast.error(message, {
-              position: "top-right",
-              theme: "colored",
-            });
-          });
+          errorMessages.forEach((message) =>
+            toast.error(message, { position: "top-right", theme: "colored" })
+          );
         } else {
           window.location.href = "/500";
         }
