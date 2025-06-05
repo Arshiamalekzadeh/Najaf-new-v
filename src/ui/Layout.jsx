@@ -61,12 +61,6 @@ export default function Layout() {
 
         {isMobile && (
           <>
-            <TopBar
-              username={userName}
-              toggleDrawer={toggleDrawer}
-              open={open}
-              drawerWidth={drawerWidth}
-            />
 
             {open && (
               <Navigation
@@ -76,7 +70,7 @@ export default function Layout() {
               />
             )}
 
-            {!open && <MobileBottomNavBar />} 
+            {!open && <MobileBottomNavBar />}
           </>
         )}
 
@@ -94,7 +88,7 @@ export default function Layout() {
             overflow: "auto",
           }}
         >
-          <Toolbar variant="dense" />
+          {!isMobile && <Toolbar variant="dense" />}
           <Box className=" xl:p-4 bg-slate-50 grow ">
             <Outlet />
           </Box>
