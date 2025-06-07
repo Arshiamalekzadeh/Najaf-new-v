@@ -89,7 +89,7 @@ export default function Layout() {
           }}
         >
           {!isMobile && <Toolbar variant="dense" />}
-          <Box className=" xl:p-4 bg-slate-50 grow ">
+          <Box className=" xl:p-4  grow ">
             <Outlet />
           </Box>
         </Box>

@@ -62,7 +62,7 @@ const Poll = ({ readOnly, data, userId, bookId, poll, refetch }) => {
           <Grid item key={item.id}>
             {!readOnly ? (
               <Box
-                className={`pl-4 flex items-center border border-slate-200 bg-slate-50 rounded-lg ${
+                className={`pl-4 flex items-center border border-slate-200  rounded-lg ${
                   checkedValues?.includes(item.id) &&
                   "bg-orange-100 border-orange-300"
                 }`}
