@@ -1,7 +1,4 @@
-import {
-  CircularProgress,
-  createTheme
-} from "@mui/material";
+import { CircularProgress, createTheme } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
@@ -18,13 +15,13 @@ import useLogin from "../hooks/useLogin";
 
 const Login = () => {
   const defaultTheme = createTheme({ direction: "rtl" });
-  const { LogIn,isLoading } = useLogin();
+  const { LogIn, isLoading } = useLogin();
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid
         container
-        className="h-screen w-screen bg-cover bg-center relative"
+        className="min-h-screen w-screen bg-cover bg-center relative overflow-hidden"
         style={{ backgroundImage: `url(${image1})` }}
       >
         {/* لایه مشکی با بلر */}
@@ -36,9 +33,7 @@ const Login = () => {
           xs={12}
           className="z-10 flex justify-center items-center w-full"
         >
-          <Box
-            className="w-[90%] sm:w-[400px] bg-white/20 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-white/30"
-          >
+          <Box className="w-[90%] sm:w-[400px] bg-white/20 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-white/30">
             {/* لوگو */}
             <div className="flex justify-center mb-4">
               <img src={boxes} alt="لوگو" className="w-24 h-24" />
@@ -53,8 +48,12 @@ const Login = () => {
             <Formik
               initialValues={{ UserName: "", Password: "" }}
               validationSchema={Yup.object({
-                UserName: Yup.string().required("نام کاربری خود را وارد ننموده‌اید"),
-                Password: Yup.string().required("کلمه عبور خود را وارد ننموده‌اید"),
+                UserName: Yup.string().required(
+                  "نام کاربری خود را وارد ننموده‌اید"
+                ),
+                Password: Yup.string().required(
+                  "کلمه عبور خود را وارد ننموده‌اید"
+                ),
               })}
               onSubmit={(values, { setSubmitting, setFieldValue }) => {
                 LogIn(
@@ -83,8 +82,12 @@ const Login = () => {
                     InputProps={{
                       style: { color: "white" },
                     }}
-                    error={formik.touched.UserName && Boolean(formik.errors.UserName)}
-                    helperText={formik.touched.UserName && formik.errors.UserName}
+                    error={
+                      formik.touched.UserName && Boolean(formik.errors.UserName)
+                    }
+                    helperText={
+                      formik.touched.UserName && formik.errors.UserName
+                    }
                   />
 
                   <Field
@@ -100,8 +103,12 @@ const Login = () => {
                     InputProps={{
                       style: { color: "white" },
                     }}
-                    error={formik.touched.Password && Boolean(formik.errors.Password)}
-                    helperText={formik.touched.Password && formik.errors.Password}
+                    error={
+                      formik.touched.Password && Boolean(formik.errors.Password)
+                    }
+                    helperText={
+                      formik.touched.Password && formik.errors.Password
+                    }
                   />
 
                   <Button

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getAllRoles } from "../api/accessibleApi";
+import { getAllRoles, getRoleAccessible } from "../api/accessibleApi";
 import { QueryKeys } from "../enums";
 
 export const useAccessible = () => {
@@ -17,11 +17,23 @@ export const useAccessible = () => {
     enabled: false,
   });
 
+    // [02] - Details Roles hook
+  const getRoleAccessibleDetial = (RoleId) => {
+    return useQuery({
+      queryKey: [QueryKeys.getAllRoles, RoleId],
+      queryFn: () => getRoleAccessible(RoleId),
+      enabled: !!RoleId,
+    });
+  };
+  
+
   return {
     roles,
     isLoadingRoles,
     isRolesError,
     isRolesSuccess,
     refetchRoles,
+
+    getRoleAccessibleDetial,
   };
 };
