@@ -5,6 +5,7 @@ export default {
     extend: {},
     colors: {
       blueprime:"#0f82ff",
+      bginputs:"rgba(255, 255, 255, 0.1)"
     },
   },
   plugins: [],

@@ -5,7 +5,7 @@ import LinkCard from "../components/linkCard";
 import useRoleChecks from "../hooks/useRoles";
 import PageHeader from "../ui/PageHeader";
 import SimplePage from "../ui/SimplePage";
-
+import Dashboardup from "../components/dashboardup";
 const Dashboard = () => {
   const { isAdmin } = useRoleChecks();
 
@@ -17,9 +17,9 @@ const Dashboard = () => {
           icon={<Monitor variant="Bulk" />}
           withoutBack
         ></PageHeader>
-          
+  <Dashboardup />
         <div className="grow p-9">
-          <Grid container spacing={2} className="mb-4">
+          <Grid container className="mb-4">
             {isAdmin && (
               <>
                 <LinkCard

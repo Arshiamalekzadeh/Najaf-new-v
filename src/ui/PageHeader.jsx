@@ -7,7 +7,7 @@ const PageHeader = ({ title, icon, children, withoutBack }) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center mb-2 rounded-md">
+      <div className="flex px-4 py-3  items-center mb-2 rounded-md">
         <div className="ml-2 w-8 h-8 rounded-full bg-blue-50 text-blue-400 flex justify-center items-center">
           {icon}
         </div>
