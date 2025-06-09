@@ -5,6 +5,11 @@ export const getAllRoles = async () => {
     const response = await axiosInstance.get("/SuperAdmin/get-all-roles");
     return response.data;
   };
+  // GET
+export const getAllRoleAccessible = async () => {
+    const response = await axiosInstance.get("/SuperAdmin/get-accessible-form");
+    return response.data;
+  };
 // GET
 export const getRoleAccessible = async (RoleId) => {
     const response = await axiosInstance.get(`/SuperAdmin/get-role-accessible-form?RoleId=${RoleId}`);

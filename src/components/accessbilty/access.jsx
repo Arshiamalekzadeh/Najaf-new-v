@@ -2,9 +2,8 @@ import { UserOctagon, ArrowRight2 } from "iconsax-react";
 import PageHeader from "../../ui/PageHeader";
 import SimplePage from "../../ui/SimplePage";
 import { useAccessible } from "../../hooks/useAccessible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppModal from "../../ui/AppModal";
-import { useEffect } from "react";
 
 const Access = () => {
   const {
@@ -14,10 +13,16 @@ const Access = () => {
     refetchRoles,
     roles,
     getRoleAccessibleDetial,
+    allRoleAccessibles,
+    isLoadingRoleAccessibles,
+    isRoleAccessiblesError,
+    isRoleAccessiblesSuccess,
+    refetchRoleAccessibles,
   } = useAccessible();
 
   const [modalRole, setModalRole] = useState(null);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
+  const [selectedAccessIds, setSelectedAccessIds] = useState([]);
 
   const { data: roleDetail, isLoading: isLoadingDetail } =
     getRoleAccessibleDetial(selectedRoleId, { enabled: !!selectedRoleId });
@@ -25,15 +30,40 @@ const Access = () => {
   const openModal = (role) => {
     setModalRole(role);
     setSelectedRoleId(role.id);
+    refetchRoleAccessibles();
   };
 
   const closeModal = () => {
     setModalRole(null);
     setSelectedRoleId(null);
+    setSelectedAccessIds([]);
   };
+
   useEffect(() => {
     refetchRoles();
   }, []);
+
+  useEffect(() => {
+    if (roleDetail?.result?.items) {
+      const ids = roleDetail.result.items.map(item => item.accessibleFormId);
+      setSelectedAccessIds(ids);
+    }
+  }, [roleDetail]);
+
+
+  const handleCheckboxChange = (id) => {
+    setSelectedAccessIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSave = () => {
+    const payload = {
+      roleId: selectedRoleId,
+      accessibleFormIds: selectedAccessIds,
+    };
+    console.log("Final Payload", payload);
+  };
 
   return (
     <SimplePage className="!bg-slate-100">
@@ -80,12 +110,29 @@ const Access = () => {
         titleIcon={<UserOctagon variant="Bulk" />}
         size="medium"
         content={
-          isLoadingDetail ? (
-            <p className="text-center text-gray-500">در حال دریافت جزئیات...</p>
-          ) : roleDetail ? (
-            <pre className="bg-gray-100 p-2 rounded text-sm overflow-auto">
-              {JSON.stringify(roleDetail, null, 2)}
-            </pre>
+          isLoadingDetail || isLoadingRoleAccessibles ? (
+            <p className="text-center text-gray-500">در حال دریافت اطلاعات...</p>
+          ) : isRoleAccessiblesSuccess ? (
+            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+              {allRoleAccessibles?.result?.items?.map((access) => (
+                <div key={access.id} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedAccessIds.includes(access.id)}
+                    onChange={() => handleCheckboxChange(access.id)}
+                  />
+                  <label className="text-sm text-gray-700">
+                    {access.title} - <span className="text-gray-400">{access.route}</span>
+                  </label>
+                </div>
+              ))}
+              <button
+                onClick={handleSave}
+                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                ذخیره تغییرات
+              </button>
+            </div>
           ) : (
             <p className="text-gray-400">اطلاعاتی برای نمایش موجود نیست.</p>
           )

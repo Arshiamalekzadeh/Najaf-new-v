@@ -1,5 +1,7 @@
 export const QueryKeys = {
   getAllRoles: ["getAllRoles"],
+    getAllRoleAccessible: ["getAllRoleAccessible"],
+
 
 };
 
