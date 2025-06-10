@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { getAllRoleAccessible, getAllRoles, getRoleAccessible } from "../api/accessibleApi";
+import { getAllRoleAccessible, getAllRoles, getRoleAccessible, setRoleAccessibleApi } from "../api/accessibleApi";
 import { QueryKeys } from "../enums";
 
 export const useAccessible = () => {
+  const queryClient = useQueryClient();
+
   // [0] - Get All Roles
   const {
     data: roles,
@@ -39,6 +41,24 @@ export const useAccessible = () => {
     });
   };
 
+  // [04] - Post new role hook
+  const {
+    mutate: setRoleAccessible,
+    isLoading: isSettingRoleAccessible,
+    isError: isSetRoleAccessibleError,
+    isSuccess: isSetRoleAccessibleSuccess,
+  } = useMutation({
+    mutationFn: setRoleAccessibleApi,
+    onSuccess: () => {
+      // Invalidate relevant queries
+      queryClient.invalidateQueries([QueryKeys.getAllRoleAccessible]);
+      // queryClient.invalidateQueries([QueryKeys.getRoleAccessible]);
+    },
+    onError: (error) => {
+      console.error("Error setting role accessible:", error);
+    },
+  });
+
 
   return {
     roles,
@@ -53,6 +73,11 @@ export const useAccessible = () => {
     isRoleAccessiblesSuccess,
     refetchRoleAccessibles,
 
+    setRoleAccessible,
+    isSettingRoleAccessible,
+    isSetRoleAccessibleError,
+    isSetRoleAccessibleSuccess,
     getRoleAccessibleDetial,
   };
 };
+

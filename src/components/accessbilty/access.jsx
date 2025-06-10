@@ -1,9 +1,11 @@
-import { UserOctagon, ArrowRight2 } from "iconsax-react";
+import { ArrowRight2, UserOctagon } from "iconsax-react";
+import { useEffect, useState } from "react";
+import { useAccessible } from "../../hooks/useAccessible";
+import AppModal from "../../ui/AppModal";
 import PageHeader from "../../ui/PageHeader";
 import SimplePage from "../../ui/SimplePage";
-import { useAccessible } from "../../hooks/useAccessible";
-import { useEffect, useState } from "react";
-import AppModal from "../../ui/AppModal";
+import noData from "../../assets/nodata.png"
+import { toast } from "react-toastify";
 
 const Access = () => {
   const {
@@ -15,17 +17,17 @@ const Access = () => {
     getRoleAccessibleDetial,
     allRoleAccessibles,
     isLoadingRoleAccessibles,
-    isRoleAccessiblesError,
     isRoleAccessiblesSuccess,
     refetchRoleAccessibles,
+    setRoleAccessible,
+    isSettingRoleAccessible,
   } = useAccessible();
 
   const [modalRole, setModalRole] = useState(null);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
   const [selectedAccessIds, setSelectedAccessIds] = useState([]);
 
-  const { data: roleDetail, isLoading: isLoadingDetail } =
-    getRoleAccessibleDetial(selectedRoleId, { enabled: !!selectedRoleId });
+  const { data: roleDetail, isLoading: isLoadingDetail } = getRoleAccessibleDetial(selectedRoleId);
 
   const openModal = (role) => {
     setModalRole(role);
@@ -45,11 +47,10 @@ const Access = () => {
 
   useEffect(() => {
     if (roleDetail?.result?.items) {
-      const ids = roleDetail.result.items.map(item => item.accessibleFormId);
+      const ids = roleDetail.result.items.map((item) => item.accessibleFormId);
       setSelectedAccessIds(ids);
     }
   }, [roleDetail]);
-
 
   const handleCheckboxChange = (id) => {
     setSelectedAccessIds((prev) =>
@@ -58,11 +59,23 @@ const Access = () => {
   };
 
   const handleSave = () => {
+    debugger
     const payload = {
       roleId: selectedRoleId,
       accessibleFormIds: selectedAccessIds,
     };
-    console.log("Final Payload", payload);
+    setRoleAccessible(payload, {
+      onSuccess: (response) => {
+        toast.success(response.message || "عملیات با موفقیت انجام شد", {
+          position: "top-right",
+        });
+        closeModal();
+        refetchRoleAccessibles();
+      },
+      onError: (error) => {
+        console.error("Failed to save role accessible:", error);
+      },
+    });
   };
 
   return (
@@ -89,9 +102,7 @@ const Access = () => {
               key={role.id}
               className="bg-white rounded-lg shadow-md p-4 flex items-center justify-between"
             >
-              <h3 className="text-lg font-semibold text-gray-800">
-                {role.persianName}
-              </h3>
+              <h3 className="text-lg font-semibold text-gray-800">{role.persianName}</h3>
               <button
                 onClick={() => openModal(role)}
                 className="text-gray-600 hover:text-gray-800 focus:outline-none"
@@ -126,15 +137,32 @@ const Access = () => {
                   </label>
                 </div>
               ))}
-              <button
-                onClick={handleSave}
-                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              >
-                ذخیره تغییرات
-              </button>
             </div>
           ) : (
-            <p className="text-gray-400">اطلاعاتی برای نمایش موجود نیست.</p>
+            <div className="flex flex-col justify-center items-center gap-4">
+              <img
+                src={noData}
+                alt="No data available"
+                className="mx-auto w-32 h-32 object-contain"
+              />
+              <p className="text-gray-400">اطلاعاتی برای نمایش موجود نیست.</p>
+            </div>
+          )
+        }
+        actions={
+          isRoleAccessiblesSuccess && (
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleSave}
+                disabled={isSettingRoleAccessible}
+                className={`px-4 py-2 rounded text-white ${isSettingRoleAccessible
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+                  }`}
+              >
+                {isSettingRoleAccessible ? "در حال ذخیره..." : "ذخیره تغییرات"}
+              </button>
+            </div>
           )
         }
       />
