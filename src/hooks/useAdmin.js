@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFoundedPersonsCount, getMissingPersonsCount } from "../api/adminApi";
+import { getFoundedPersonsCount, getLastMissingPersons, getMissingPersonsCount } from "../api/adminApi";
 import { QueryKeys } from "../enums";
 
-const useAdmin = () => {
+const useAdmin = (params) => {
     const {
         data: missingPersonsCount,
         isLoading: isLoadingMissingCount,
@@ -26,6 +26,19 @@ const useAdmin = () => {
         enabled: false,
     });
 
+
+    const {
+        data: lastMissingPersons,
+        isLoading: isLoadingLastMissing,
+        isError: isLastMissingError,
+        isSuccess: isLastMissingSuccess,
+        refetch: refetchLastMissingPersons,
+    } = useQuery({
+        queryKey: [QueryKeys.getLastMissingPersons, params],
+        queryFn: () => getLastMissingPersons({ params }),
+        enabled: false,
+    });
+
     return {
         missingPersonsCount,
         isLoadingMissingCount,
@@ -38,6 +51,12 @@ const useAdmin = () => {
         isFoundedCountError,
         isFoundedCountSuccess,
         refetchFoundedPersonsCount,
+
+        lastMissingPersons,
+        isLoadingLastMissing,
+        isLastMissingError,
+        isLastMissingSuccess,
+        refetchLastMissingPersons,
 
 
     };

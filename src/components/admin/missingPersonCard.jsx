@@ -18,23 +18,56 @@ const MissingPersonCard = (props) => {
     onViewClick,
   } = props;
 
+  const getAgeRangeLabel = (code) => {
+    const map = {
+      0: "ناشناخته",
+      1: "کودک ۰–۱۲",
+      2: "نوجوان ۱۲–۱۸",
+      3: "جوان ۱۸–۲۵",
+      4: "میانسال ۲۵–۵۰",
+      5: "سالمند ۵۰+",
+    };
+    return map[code] || "نامشخص";
+  };
+
+  const getGenderLabel = (code) => {
+    const map = {
+      0: "مرد",
+      1: "زن",
+    };
+    return map[code] || "نامشخص";
+  };
+
+  const getStatusLabel = (code) => {
+    const map = {
+      0: "در حال جستجو",
+      1: "پیدا شده",
+    };
+    return map[code] || "نامشخص";
+  };
+
   return (
     <div className="rounded-2xl shadow-md bg-white p-4 space-y-2 w-full">
-      <div className="flex justify-between items-center text-sm text-gray-600">
-        {isSpecial && <span className="text-orange-500 font-semibold">افراد خاص</span>}
-        <span>{dateTime}</span>
-      </div>
-
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <p className="text-lg font-semibold text-gray-800">{name}</p>
-          <p className="text-sm text-gray-500">{status}</p>
+          <div className="flex gap-3">
+            <img
+              src={personAvatar}
+              alt={name}
+              className="w-12 h-12 rounded-full object-cover border"
+            />
+            <div>
+              <p className="text-sm font-semibold text-gray-800">{name}</p>
+              <p className="text-sm text-gray-500">{getStatusLabel(status)}</p>
+            </div>
+            <div>
+              <div className="flex flex-col  items-end text-sm text-gray-600">
+                {isSpecial && <span className="text-orange-500 font-semibold">افراد خاص</span>}
+                <span>{dateTime}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <img
-          src={personAvatar}
-          alt={name}
-          className="w-12 h-12 rounded-full object-cover border"
-        />
       </div>
 
       <div className="flex items-center justify-between text-sm text-gray-600">
@@ -44,9 +77,9 @@ const MissingPersonCard = (props) => {
         </div>
         <div className="flex items-center gap-1">
           <Profile size={16} />
-          <span>{gender}</span>
+          <span>{getGenderLabel(gender)}</span>
           <span className="mx-1">|</span>
-          <span>{ageRange}</span>
+          <span>{getAgeRangeLabel(ageRange)}</span>
         </div>
       </div>
 
@@ -66,12 +99,6 @@ const MissingPersonCard = (props) => {
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t">
-        <button
-          className="text-blue-600 text-sm font-medium"
-          onClick={onViewClick}
-        >
-          مشاهده اطلاعات
-        </button>
         <div className="flex items-center gap-2 text-sm text-gray-800">
           <img
             src={reporterAvatar}
@@ -80,6 +107,12 @@ const MissingPersonCard = (props) => {
           />
           <span>{reporterName}</span>
         </div>
+        <button
+          className="text-blue-600 text-sm font-medium"
+          onClick={onViewClick}
+        >
+          مشاهده اطلاعات
+        </button>
       </div>
     </div>
   );

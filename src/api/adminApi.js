@@ -13,3 +13,9 @@ export const getFoundedPersonsCount = async () => {
   const response = await axiosInstance.get("/Admin/get-founded-persons-count");
   return response.data;
 };
+// get get-last-missing-persons
+export const getLastMissingPersons = async ({params}) => {
+  debugger;
+  const response = await axiosInstance.get("/Admin/get-last-missing-persons",{params});
+  return response.data;
+};
