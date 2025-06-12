@@ -5,19 +5,19 @@ export default function Superadminsetting() {
   const routes = [
     {
       title: "مدیریت کاربران",
-      route: "/users"
+      route: "/app/users"
     },
     {
       title: "مدیریت نقش‌ها",
-      route: "/roles"
+      route: "/app/roles"
     },
     {
       title: "مدیریت مکان‌ها",
-      route: "/locations"
+      route: "/app/locations"
     },
     {
       title: "مدیریت سطح دسترسی",
-      route: "/permissions"
+      route: "/app/permissions"
     }
   ];
 

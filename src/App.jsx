@@ -13,6 +13,7 @@ import Layout from "./ui/Layout";
 import LoadingOveray from "./ui/loadingOveray";
 import PrivateRoute from "./utils/privateRoutes";
 import SuperadminSettings from "./pages/SuperadminSettings";
+import Usermanagement from "./pages/Usermanagement";
 
 function App() {
   const { loading: overlayLoading } = useLoadingStore();
@@ -25,6 +26,7 @@ function App() {
             <Route element={<PrivateRoute requiredRoles={["SuperAdmin"]} />}>
               <Route path="/app/dashboard" element={<Dashboard />} />
               <Route path="/app/superadminsettings" element={<SuperadminSettings/>} />
+              <Route path="/app//users" element={<Usermanagement />} />
             </Route>
           </Route>
           <Route path="/500" element={<ServerError />} />
