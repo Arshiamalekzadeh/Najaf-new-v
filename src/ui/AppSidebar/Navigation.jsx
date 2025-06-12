@@ -9,7 +9,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import React from "react";
 import ListItems from "./listItems";
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",

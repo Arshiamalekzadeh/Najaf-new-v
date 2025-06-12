@@ -12,8 +12,16 @@ import image1 from "../assets/bg.png"; // تصویر نجف
 import boxes from "../assets/fav.png"; // لوگو
 
 import useLogin from "../hooks/useLogin";
+import useAuthStore from "../store/useAuthStore";
+import { useEffect } from "react";
 
 const Login = () => {
+  const clear = useAuthStore((state) => state.clear);
+
+  useEffect(() => {
+    clear();
+  }, []);
+
   const defaultTheme = createTheme({ direction: "rtl" });
   const { LogIn, isLoading } = useLogin();
 

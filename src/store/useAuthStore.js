@@ -7,7 +7,7 @@ const useAuthStore = create((set) => ({
   // userName: sessionStorage.getItem("userName") || "", // Add userName for Layout
 
   update: (token, refreshToken, userRoles, userName) => {
-    set({ token, refreshToken, userRoles, userName });
+    set({ token, refreshToken, role: userRoles, userName });
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("refreshToken", refreshToken);
     sessionStorage.setItem("userRoles", userRoles); // Store as string, not JSON.stringify

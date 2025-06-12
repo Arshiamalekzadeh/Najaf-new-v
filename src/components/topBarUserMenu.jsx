@@ -4,10 +4,13 @@ import MenuItem from "@mui/material/MenuItem";
 import { User } from "iconsax-react";
 import React, { useState } from "react";
 import useLogin from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const TopBarUserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { LogOut: LogOutEx } = useLogin();
+  const navigate = useNavigate();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -18,6 +21,8 @@ const TopBarUserMenu = () => {
 
   function logoutApp() {
     LogOutEx();
+    handleClose();
+    navigate("/");
   }
 
   return (

@@ -8,7 +8,7 @@ export const signIn = async (data) => {
 
 // POST
 export const signOut = async () => {
-  const response = await axiosInstance.post("/Identity/Logout");
+  const response = await axiosInstance.get("/Authentication/sign-out");
   return response.data;
 };
 

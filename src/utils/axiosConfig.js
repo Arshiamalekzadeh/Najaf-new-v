@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(
           window.location.href = "/500";
         }
       } else {
-        toast.error(data.message.message[0] || "خطای ناشناخته");
+        toast.error(data.message || "خطای ناشناخته");
         console.log(data);
       }
     } else {

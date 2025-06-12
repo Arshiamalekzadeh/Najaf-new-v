@@ -2,28 +2,27 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { ArrowLeft2, Buildings2, Cd, Dropbox, Monitor, ShoppingCart, Signpost } from "iconsax-react";
+import { ArrowLeft2, Cd } from "iconsax-react";
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import routesData from "./routes.jsx";
+import useAuthStore from "../../store/useAuthStore.js";
 
 const ListItems = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
-
-
   const locationPath = useLocation().pathname;
   const [activePath, setActivePath] = useState(locationPath);
   const [openSubMenu, setOpenSubMenu] = useState({});
+  const { role } = useAuthStore(); // ⬅️ دریافت نقش کاربر
+  const routes = routesData(role); // ⬅️ فیلتر مسیرها
 
   const handleMenuItemClick = (path) => {
     setActivePath(path);
     navigate(path);
-    if (isMobile) {
-      setOpenSubMenu({}); // Close all submenus when navigating in mobile
-    }
+    if (isMobile) setOpenSubMenu({});
   };
 
   const toggleSubMenu = (index) => {
@@ -33,16 +32,16 @@ const ListItems = () => {
     }));
   };
 
-  const mainListItems = routesData.map((item, index) => (
+  const mainListItems = routes.map((item, index) => (
     <React.Fragment key={index}>
       <ListItemButton
         className="group"
         onClick={(e) => {
           e.stopPropagation();
           if (item.submenu) {
-            toggleSubMenu(index); // Toggle the submenu if it exists
+            toggleSubMenu(index);
           } else {
-            handleMenuItemClick(item.path); // Change the path if no submenu
+            handleMenuItemClick(item.path);
           }
         }}
       >
@@ -76,7 +75,7 @@ const ListItems = () => {
               to={subItem.path}
               key={subIndex}
               onClick={(e) => {
-                e.stopPropagation(); // Prevent parent click event
+                e.stopPropagation();
                 handleMenuItemClick(subItem.path);
               }}
             >
@@ -100,9 +99,6 @@ const ListItems = () => {
           ))}
         </div>
       )}
-      {/* {index === 5 && <Divider />}
-      {index === 3 && <Divider />}
-      {index === 2 && <Divider />} */}
     </React.Fragment>
   ));
 

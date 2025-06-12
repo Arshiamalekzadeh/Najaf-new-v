@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-import { signIn } from "../api/signInApi";
+import { signIn, signOut } from "../api/signInApi";
 import useAuthStore from "../store/useAuthStore";
 
 const useLogin = () => {
@@ -14,7 +14,8 @@ const useLogin = () => {
         const { token, refreshToken, userRoles } = data.result;
 
         const decoded = jwtDecode(token);
-        const role = decoded.role || "User"; 
+        const role = decoded.role || "User";
+        console.log("User Role:", role); // برای دیباگ
 
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("refreshToken", refreshToken);
@@ -27,28 +28,40 @@ const useLogin = () => {
           theme: "colored",
         });
 
-        window.location.href = "/app/dashboard";
+        window.location.href = role === "SuperAdmin" ? "/app/dashboard" : "/app/AdminDashbord";
       } else {
         toast.error("ورود ناموفق. لطفاً دوباره تلاش کنید.");
       }
     },
     onError: (error) => {
       console.log(error);
-      const errorMessage =
-        error?.response?.data?.message?.[0] ;
-    
-      toast.error(errorMessage, {
+    },
+  });
+
+  const goSignOut = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      toast.info("با موفقیت خارج شدید", {
         position: "top-center",
         theme: "colored",
       });
-    }
-    
+    },
+    onError: () => {
+      toast.error("مشکلی در خروج از حساب رخ داد", {
+        position: "top-center",
+        theme: "colored",
+      });
+    },
   });
+
+
+
+
 
   return {
     LogIn: goSigIn.mutate,
     isLoading: goSigIn.isPending,
-
+    LogOut: goSignOut.mutate,
   };
 };
 
