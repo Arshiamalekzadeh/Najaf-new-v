@@ -10,8 +10,8 @@ const routesData = [
   {
     icon: <Setting2 variant="Bulk" />,
     text: "تنظیمات",
-    title: "settings",
-    path: "/app/settings",
+    title: "superadminsettings",
+    path: "/app/superadminsettings",
   },
 
 
